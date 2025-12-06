@@ -5,7 +5,7 @@
 #include <deque>
 #include <numeric>
 
-constexpr double PULSES_PER_REV  = 24.0;          // 24 pulses per mechanical revolution
+constexpr double PULSES_PER_REV  = 12.0;          // 12 pulses per mechanical revolution
 constexpr uint32_t SAMPLE_TIME_MS = 5000;         // Sample window in milliseconds
 constexpr size_t AVG_WINDOW_SIZE = 20;            // Moving average window length
 
@@ -16,7 +16,7 @@ void onTachPulse() {
     pulseCount++;
 }
 
-// --- Calculate instantaneous motor RPM (using milliseconds now) ---
+// --- Calculate instantaneous motor RPM (using milliseconds) ---
 double calculateMotorRPM(uint32_t sampleTimeMs = SAMPLE_TIME_MS) {
     uint32_t startCount = pulseCount.load();
     
@@ -81,7 +81,7 @@ int main() {
 
     // Sample continuously at SAMPLE_TIME_MS
     while (true) {
-        calcMotorSpeed(5.0);  // gear ratio example
+        calcMotorSpeed(5.0);  // gear ratio 
         std::this_thread::sleep_for(std::chrono::milliseconds(SAMPLE_TIME_MS));
     }
 
