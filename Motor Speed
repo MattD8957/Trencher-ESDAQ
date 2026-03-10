@@ -1,6 +1,7 @@
-// ==============================
+#include <cmath>
+#include <iostream>
+
 // Motor Control Command Template
-// ==============================
 
 // Hardware Limits (adjust if needed later)
 #define MAX_RPM        14
@@ -16,9 +17,10 @@
 #define PIN_SPEED      DIO2
 #define PIN_BRAKE      DIO3
 
-// ========================================
+void digitalWrite(int pin, int value) { } 
+void analogWrite(int pin, float value) { }
+
 // Function: SetMotorTargetRPM
-// ========================================
 void SetMotorTargetRPM(int targetRPM)
 {
     // ----------------------------
@@ -29,10 +31,12 @@ void SetMotorTargetRPM(int targetRPM)
     if (targetRPM > MAX_RPM)
     {
         // TODO: set to MAX_RPM
+        clampledRPM = MAX_RPM;
     }
     else if (targetRPM < MIN_RPM)
     {
         // TODO: set to MIN_RPM
+        clampledRPM = MIN_RPM;
     }
 
     // -----------------------------------------
@@ -42,19 +46,21 @@ void SetMotorTargetRPM(int targetRPM)
 
     if (clampedRPM >= 0)
     {
-        // TODO: CW logic
+        //CW logic
+        directionCW = true;
     }
     else
     {
-        // TODO: CCW logic
+        //CCW logic
+        directionCW = false;
     }
 
     // -----------------------------------------
     // 3. Convert RPM magnitude to 0–5V scale
     // -----------------------------------------
-    float rpmMagnitude = ______;
+    float rpmMagnitude = abs(clampedRPM);
 
-    float speedVoltage = ______;  // Map RPM to 0–5V
+    float speedVoltage = (rpmMagnitude / MAX_RPM) * (VOLTAGE_MAX - VOLTAGE_MIN) + VOLTAGE_MIN;  // Map RPM to 0–5V
 
     // -----------------------------------------
     // 4. Safety Checks
@@ -65,9 +71,10 @@ void SetMotorTargetRPM(int targetRPM)
 
     if (!brakeIsOff || !enableIsOn)
     {
-        // TODO:
         // - Set speed to 0V
+        analogWrite(PIN_SPEED, 0);  // Ensure motor is stopped
         // - Prompt UI (placeholder call)
+        printf("Error: Brake is engaged or Enable is off. Motor cannot run.\n");
         // - Exit function
         return;
     }
@@ -79,16 +86,20 @@ void SetMotorTargetRPM(int targetRPM)
     // Direction Pin (0V CW, 5V CCW)
     if (directionCW)
     {
-        // TODO: Write 0V to direction pin
+        // Write 0V to direction pin
+        digitalWrite(PIN_DIRECTION, false);
     }
     else
     {
-        // TODO: Write 5V to direction pin
+        // Write 5V to direction pin
+        digitalWrite(PIN_DIRECTION, true);
     }
 
     // Enable Pin (0V Enable, 5V Disable)
+    digitalWrite(PIN_ENABLE, false);
     // TODO: Ensure enable is correct state
 
     // Speed Pin (0–5V analog output)
+    analogWrite(PIN_SPEED, speedVoltage);
     // TODO: Write speedVoltage to speed pin
 }
