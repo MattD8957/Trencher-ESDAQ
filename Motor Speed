@@ -1,0 +1,94 @@
+// ==============================
+// Motor Control Command Template
+// ==============================
+
+// Hardware Limits (adjust if needed later)
+#define MAX_RPM        14
+#define MIN_RPM        0
+
+// Voltage constants
+#define VOLTAGE_MAX    5.0
+#define VOLTAGE_MIN    0.0
+
+// Pin definitions
+#define PIN_DIRECTION  DIO0
+#define PIN_ENABLE     DIO1
+#define PIN_SPEED      DIO2
+#define PIN_BRAKE      DIO3
+
+// ========================================
+// Function: SetMotorTargetRPM
+// ========================================
+void SetMotorTargetRPM(int targetRPM)
+{
+    // ----------------------------
+    // 1. Clamp RPM to valid range
+    // ----------------------------
+    int clampedRPM = targetRPM;
+
+    if (targetRPM > MAX_RPM)
+    {
+        // TODO: set to MAX_RPM
+    }
+    else if (targetRPM < MIN_RPM)
+    {
+        // TODO: set to MIN_RPM
+    }
+
+    // -----------------------------------------
+    // 2. Determine Direction (sign of target)
+    // -----------------------------------------
+    bool directionCW;
+
+    if (clampedRPM >= 0)
+    {
+        // TODO: CW logic
+    }
+    else
+    {
+        // TODO: CCW logic
+    }
+
+    // -----------------------------------------
+    // 3. Convert RPM magnitude to 0–5V scale
+    // -----------------------------------------
+    float rpmMagnitude = ______;
+
+    float speedVoltage = ______;  // Map RPM to 0–5V
+
+    // -----------------------------------------
+    // 4. Safety Checks
+    // -----------------------------------------
+
+    bool brakeIsOff = Run;
+    bool enableIsOn = Disable;
+
+    if (!brakeIsOff || !enableIsOn)
+    {
+        // TODO:
+        // - Set speed to 0V
+        // - Prompt UI (placeholder call)
+        // - Exit function
+        return;
+    }
+
+    // -----------------------------------------
+    // 5. Apply Outputs
+    // -----------------------------------------
+
+    // Direction Pin (0V CW, 5V CCW)
+    if (directionCW)
+    {
+        // TODO: Write 0V to direction pin
+    }
+    else
+    {
+        // TODO: Write 5V to direction pin
+    }
+
+    // Enable Pin (0V Enable, 5V Disable)
+    // TODO: Ensure enable is correct state
+
+    // Speed Pin (0–5V analog output)
+    // TODO: Write speedVoltage to speed pin
+}
