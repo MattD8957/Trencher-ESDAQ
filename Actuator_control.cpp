@@ -78,7 +78,7 @@ void stop(const std::shared_ptr<std_srvs::srv::Trigger::Request>, std::shared_pt
     res message = "Actuator stopped"
 }
 
-// Timer callback: update postion 
+// Timer callback: update position 
 void update_position() {
     const double step = (50.0 / full_stroke_ms_)*100.0;
     // step = percent change per 50ms
